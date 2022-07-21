@@ -8,9 +8,36 @@ namespace LinqExercise
     {
         //Static array of integers
         private static int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-
+         
+        
         static void Main(string[] args)
         {
+            Console.WriteLine($"The Sum of the array equals: {numbers.Sum()}");
+            Console.WriteLine();
+
+            Console.WriteLine($"The Average of the array equals: {numbers.Average()}");
+            Console.WriteLine();
+
+            Console.WriteLine($"The array sorted in ascending order is:");
+            numbers.OrderBy(x => x).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
+
+            Console.WriteLine($"The array sorted in descending order is: ");
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
+
+            Console.WriteLine("The numbers in the array greater than 6 are: ");
+            numbers.Where(x => x > 6).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
+
+            Console.WriteLine("Four of the numbers in the array in ascending order are: ");
+            numbers.OrderBy(x => x).Take(4).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
+
+            Console.WriteLine("The array listed with my age inputted at index 4 is: ");
+            numbers[4] = 25;
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine();
             /*
              * 
              * Complete every task using Method OR Query syntax. 
@@ -36,6 +63,27 @@ namespace LinqExercise
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
+            
+            Console.WriteLine("Employees first names starting with C or S in ascending order");
+            employees.Where(x => x.FirstName.StartsWith("C") || x.FirstName.StartsWith("S")).OrderBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine(x.FullName));
+            Console.WriteLine();
+
+            Console.WriteLine("Employees over 26 in order by age and first name");
+            employees.Where(x => x.Age > 26).OrderBy(x => (x.Age)).ThenBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine($"Full Name: {x.FullName}\n Age: {x.Age}" ));
+            Console.WriteLine();
+
+            
+            Console.WriteLine("Sum  and Average of employees Years of Experience with 10 years or less experiance over age 35");
+            var filter = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35);
+            var sum =filter.Sum(x => x.YearsOfExperience);
+            var average = filter.Average(x => x.YearsOfExperience);
+            Console.WriteLine($"Sum: {sum}\nAverage: {average}");
+            Console.WriteLine();
+
+            Console.WriteLine("Adding new employee to list without using .Add");
+            var addEmployee = new Employee("Mike", "Nichols", 25, 0);
+            employees.Append(addEmployee).ToList().ForEach(x => Console.WriteLine(x.FullName));
+            
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in acesnding order by FirstName.
 
